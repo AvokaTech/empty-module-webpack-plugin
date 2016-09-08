@@ -13,6 +13,8 @@ EmptyModulePlugin.prototype.apply = function (compiler) {
     var self = this;
 
     compiler.plugin('normal-module-factory', function (nmf) {
+        var context = nmf.context;
+
         nmf.plugin('resolver', function (resolver) {
             return function (data, callback) {
                 var request = data.request;
