@@ -10,16 +10,18 @@ function EmptyModulePlugin(resourceRegExp, source) {
 module.exports = EmptyModulePlugin;
 
 EmptyModulePlugin.prototype.apply = function (compiler) {
+    var self = this;
+
     compiler.plugin('normal-module-factory', function (nmf) {
         nmf.plugin('resolver', function (resolver) {
             return function (data, callback) {
                 var request = data.request;
 
-                if (this.resourceRegExp.test(request)) {
-                    var source = this.source;
+                if (self.resourceRegExp.test(request)) {
+                    var source = self.source;
 
-                    if (typeof this.source === 'function') {
-                        source = this.source(request);
+                    if (typeof self.source === 'function') {
+                        source = self.source(request);
                     }
 
                     return callback(null, new RawModule(
